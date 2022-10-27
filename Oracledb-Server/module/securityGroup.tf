@@ -1,7 +1,6 @@
 
 locals {
   #security_group_cidrs = [for s in data.aws_subnet_ids.private_subnets.cidr_block : s]
-  #security_group_cidrs = ["10.251.164.0/25", "10.251.164.192/26", "10.251.164.0/25"]
   security_group_cidrs = [var.security_group_cidrs]
 }
 

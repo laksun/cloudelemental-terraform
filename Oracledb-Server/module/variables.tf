@@ -104,7 +104,7 @@ variable "instance_type" {
 variable "owner" {
   type        = string
   description = "owner for the oracle server ami"
-  default     = "589623825565"
+  default     = ""
 }
 
 variable "root_block_device" {
@@ -224,7 +224,7 @@ variable "assign_public_ip" {
 variable "public_subnet_id" {
   type        = string
   description = "ami id for the sql server if user wants a specific ami id "
-  default     = "subnet-00067a435e1e1f54e"
+  default     = "subnet-x"
 }
 
 variable "io_volume_type" {
