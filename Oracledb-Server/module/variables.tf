@@ -233,5 +233,11 @@ variable "io_volume_type" {
   default     = ""
 }
 
+variable "ports" {
+  description = "IAM usernames"
+  type        = list(number)
+  default     = [5500, 111, 2049, 32768, 44182, 54508]
+}
+
 
 

@@ -13,18 +13,14 @@ locals {
   oracle_security_group_name             = "${var.oracledb_name}-${var.env}-oracle-security-group"
   oracleservers_security_group_name      = "${var.oracledb_name}-${var.env}-oracle-servers-security-group"
   oracle_skyappliance_group_name         = "${var.oracledb_name}-${var.env}-oracle-skyappliance-security-group"
-  ports                                  = [5500, 111, 2049, 32768, 44182, 54508]
+  ports                                  = var.ports
   subnet_id                              = sort(data.aws_subnet_ids.private_subnets.ids)[0]
   #logGroupName                    = "${var.oracledb_name}-${var.env}-${var.logGroupName}"
   #### Oracle roles
   oracle_tags = {
     "BlueprintSource"  = "it.ec2.cloudformation.oracle"
     "BlueprintVersion" = var.BlueprintVersion
-    # "Contact"  = var.Contact
-    # "Service"  = var.ProductCode
-    # "Environment" = var.EnvironmentCode
-    # "OrgId" = var.OrgId
-    # "Capacity" = var.Capacity
+
   }
 }
 
@@ -141,38 +137,14 @@ data "aws_iam_policy" "AmazonEC2RoleforSSM" {
   arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
 
-# data "aws_ami" "hardened_oracle_server_ami" {
-#   most_recent = true
-#   filter {
-#     name   = "architecture"
-#     values = ["x86_64"]
-#   }
 
-#   filter {
-#     name   = "root-device-type"
-#     values = ["ebs"]
-#   }
 
-#   filter {
-#     name   = "virtualization-type"
-#     values = ["hvm"]
-#   }
 
-#   filter {
-#     name   = "name"
-#     values = ["a*"]
-#   }
-
-#   owners = [var.owner]
-# }
 
 
 data "template_file" "userdata" {
   template = file("${path.module}/template/userdata.sh")
-  # vars = {
-  #   instance_name          = local.app_name
-  #   CloudWatchLogGroupName = local.logGroupName
-  # }
+
 }
 
 data "template_cloudinit_config" "config_oracle_server" {
@@ -187,20 +159,7 @@ data "template_cloudinit_config" "config_oracle_server" {
 
   }
 
-  # part {
-  #   content_type = "text/x-shellscript"
-  #   content      = data.template_file.cloud_init_cw_agent.rendered
 
-  # }
 }
 
-# data "template_file" "cloudwatch_agent_configuration_standard" {
-#   template = "${file("${path.module}/templates/cloudwatch_agent_configuration_standard.json")}"
 
-#   vars {
-#     aggregation_dimensions      = "${jsonencode(var.aggregation_dimensions)}"
-#     cpu_resources               = "${var.cpu_resources}"
-#     disk_resources              = "${jsonencode(var.disk_resources)}"
-#     metrics_collection_interval = "${var.metrics_collection_interval}"
-#   }
-# }
