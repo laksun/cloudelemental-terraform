@@ -9,7 +9,6 @@ module "oracledb" {
   QSS3BucketName = "myoracle-bucket"
   tags           = { product = "" }
 
-  #local  levent
   instance_type          = "t3.large"
   oracleserver_ami       = "ami-"
   public_subnet_id       = "subnet-"
