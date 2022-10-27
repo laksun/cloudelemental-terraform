@@ -12,7 +12,6 @@ module "key_pair" {
 
 resource "aws_instance" "OracleServer" {
   ami = var.oracleserver_ami
-  #ami = var.oracleserver_ami == "" ? data.aws_ami.hardened_oracle_server_ami.id : var.oracleserver_ami
 
   instance_type               = var.instance_type
   iam_instance_profile        = aws_iam_instance_profile.instance_oracle_server_profile.name
@@ -20,8 +19,6 @@ resource "aws_instance" "OracleServer" {
   associate_public_ip_address = var.assign_public_ip
   key_name                    = module.key_pair.key_pair_key_name
 
-  #subnet_id            = var.private_subnet_id == "" ? local.subnet_id : var.private_subnet_id
-  #network_interface = aws_network_interface.clusterENI.id
 
   root_block_device {
     delete_on_termination = lookup(var.root_block_device, "delete_on_termination", true)
@@ -44,13 +41,9 @@ resource "aws_instance" "OracleServer" {
     }
   }
 
-  #user_data = data.template_file.userdata.rendered
-  user_data_base64 = data.template_cloudinit_config.config_oracle_server.rendered
-  #user_data = (data.template_file.user_data.rendered)
 
-  # user_data = "${coalesce(var.user_data, file("${path.module}/templates/user_data.tml"))}"
-  #user_data = file("${path.module}/templates/user_data.sh")
-  tags = merge(local.common_tags, { "Name" = format("%s", local.app_name) })
+  user_data_base64 = data.template_cloudinit_config.config_oracle_server.rendered
+  tags             = merge(local.common_tags, { "Name" = format("%s", local.app_name) })
 }
 
 resource "aws_ebs_volume" "reco_volumes" {

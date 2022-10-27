@@ -15,7 +15,6 @@ locals {
   oracle_skyappliance_group_name         = "${var.oracledb_name}-${var.env}-oracle-skyappliance-security-group"
   ports                                  = var.ports
   subnet_id                              = sort(data.aws_subnet_ids.private_subnets.ids)[0]
-  #logGroupName                    = "${var.oracledb_name}-${var.env}-${var.logGroupName}"
   #### Oracle roles
   oracle_tags = {
     "BlueprintSource"  = "it.ec2.cloudformation.oracle"
