@@ -6,7 +6,7 @@ provider "aws" {
 #   # required_version = "0.13.5"
 #   # TODO: add Dynamodb locking
 #   backend "s3" {
-#     bucket         = "terraform-state-1ggeukzdtgsl-us-east-1"
+#     bucket         = "terraform-state-us-east-1"
 #     dynamodb_table = "TerraformStatelock"
 #     key            = "terraform.tfstate"
 #     region         = "us-east-1"
